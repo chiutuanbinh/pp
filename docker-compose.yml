@@ -1,0 +1,10 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  postgresql:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - 5432:5432
+    # volumes:
+    #   - /mnt/d/postgresql:/var/lib/postgresql/data:rw
