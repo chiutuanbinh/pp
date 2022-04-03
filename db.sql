@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS industry_relation_types(
 
 
 
-CREATE TABLE IF NOT EXISTS indsutry_relations(
+CREATE TABLE IF NOT EXISTS industry_relations(
     id SERIAL PRIMARY KEY,
     from_company_id INT,
     to_company_id INT,
