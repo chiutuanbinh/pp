@@ -14,6 +14,7 @@ var Config config
 
 func init() {
 	viper.AddConfigPath("../")
+	viper.AddConfigPath("./")
 	viper.SetConfigName("app")
 	viper.SetConfigType("env")
 	viper.AutomaticEnv()

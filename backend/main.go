@@ -1,6 +1,8 @@
 package main
 
 import (
+	"mysite/db"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,5 +13,12 @@ func main() {
 			"message": "ping",
 		})
 	})
+	r.GET("/company", func(ctx *gin.Context) {
+		var allCompany = db.GetAllCompany()
+		ctx.JSON(200, gin.H{
+			"data": allCompany,
+		})
+	})
+	r.GET("")
 	r.Run()
 }
