@@ -14,11 +14,37 @@ func main() {
 		})
 	})
 	r.GET("/company", func(ctx *gin.Context) {
-		var allCompany = db.GetAllCompany()
+		var allCompanies = db.GetAllCompanies()
 		ctx.JSON(200, gin.H{
-			"data": allCompany,
+			"data": allCompanies,
 		})
 	})
-	r.GET("")
+	r.GET("/person", func(ctx *gin.Context) {
+		var allPersons = db.GetAllPersons()
+		ctx.JSON(200, gin.H{
+			"data": allPersons,
+		})
+	})
+
+	r.GET("/industry", func(ctx *gin.Context) {
+		var allIndustries = db.GetAllIndustries()
+		ctx.JSON(200, gin.H{
+			"data": allIndustries,
+		})
+	})
+
+	r.GET("/stock", func(ctx *gin.Context) {
+		var allStocks = db.GetAllStocks()
+		ctx.JSON(200, gin.H{
+			"data": allStocks,
+		})
+	})
+
+	r.GET("/exchange", func(ctx *gin.Context) {
+		var allExchanges = db.GetAllExchange()
+		ctx.JSON(200, gin.H{
+			"data": allExchanges,
+		})
+	})
 	r.Run()
 }

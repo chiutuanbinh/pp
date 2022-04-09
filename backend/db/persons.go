@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"log"
 )
 
@@ -22,4 +23,19 @@ func AddPerson(name string, age int, image_url string) int {
 		log.Fatal(err)
 	}
 	return personId
+}
+
+func GetAllPersons() []Person {
+	var query = fmt.Sprintf(`SELECT id,name, age, legal_entity_id, image_url FROM %[1]s`, personTable)
+	rows, err := pool.Query(context.TODO(), query)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var res = make([]Person, 0)
+	for rows.Next() {
+		p := Person{}
+		rows.Scan(&p.ID, &p.Name, &p.Age, &p.LegalEntityId, &p.ImageUrl)
+		res = append(res, p)
+	}
+	return res
 }

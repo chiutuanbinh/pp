@@ -6,10 +6,17 @@ import (
 	"log"
 )
 
-func AddOwnerships(legalEntityId int, companyId int) int {
-	var insertScript string = `INSERT INTO owns(legal_entity_id, company_id) VALUES($1,$2) RETURNING id;`
+type Ownership struct {
+	ID            int
+	LegalEntityId int
+	StockId       int
+	Amount        int
+}
+
+func AddOwnerships(legalEntityId int, stockId int, amount int) int {
+	var insertScript string = `INSERT INTO owns(legal_entity_id, stock_id, amount) VALUES($1,$2,$3) RETURNING id;`
 	ownsId := -1
-	err := pool.QueryRow(context.TODO(), insertScript, legalEntityId, companyId).Scan(&ownsId)
+	err := pool.QueryRow(context.TODO(), insertScript, legalEntityId, stockId, amount).Scan(&ownsId)
 
 	if err != nil {
 		log.Fatal(err)
@@ -18,22 +25,22 @@ func AddOwnerships(legalEntityId int, companyId int) int {
 	return ownsId
 }
 
-func AddPersonOwnerships(personId int, companyId int) int {
+func AddPersonOwnerships(personId int, stockId int, amount int) int {
 	var queryScript string = `SELECT legal_entity_id FROM persons WHERE id=$1;`
 	var legal_entity_id = -1
 	err := pool.QueryRow(context.TODO(), queryScript, personId).Scan(&legal_entity_id)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return AddOwnerships(legal_entity_id, companyId)
+	return AddOwnerships(legal_entity_id, stockId, amount)
 }
 
-func AddCompanyOwnerships(owningCompanyId int, ownedCompanyId int) int {
+func AddCompanyOwnerships(owningCompanyId int, stockId int, amount int) int {
 	var queryScript string = fmt.Sprintf(`SELECT legal_entity_id FROM %[1]s WHERE id=$1;`, companyTable)
 	var legal_entity_id = -1
 	err := pool.QueryRow(context.TODO(), queryScript, owningCompanyId).Scan(&legal_entity_id)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return AddOwnerships(legal_entity_id, ownedCompanyId)
+	return AddOwnerships(legal_entity_id, stockId, amount)
 }

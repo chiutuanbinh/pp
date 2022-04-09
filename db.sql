@@ -25,13 +25,14 @@ CREATE TABLE IF NOT EXISTS companies(
 CREATE TABLE IF NOT EXISTS owns(
     id SERIAL PRIMARY KEY,
     legal_entity_id INT,
-    company_id INT,
+    stock_id INT,
+    amount INT,
     CONSTRAINT fk_legal_entity
         FOREIGN KEY(legal_entity_id)
             REFERENCES legal_entities(ID),
-    CONSTRAINT fk_company
-        FOREIGN KEY(company_id)
-            REFERENCES companies(id)
+    CONSTRAINT fk_stock
+        FOREIGN KEY(stock_id)
+            REFERENCES stocks(id)
 );
 
 

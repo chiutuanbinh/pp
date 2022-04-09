@@ -33,7 +33,7 @@ func TestAddCompany(t *testing.T) {
 }
 
 func TestGetAllCompany(t *testing.T) {
-	var res = GetAllCompany()
+	var res = GetAllCompanies()
 	t.Log(res)
 }
 
@@ -47,21 +47,22 @@ func TestAddPerson(t *testing.T) {
 
 func TestAddOwnerships(t *testing.T) {
 	var legalEntityId = addLegalEntity()
-	var company_id = AddCompany("ABC")
-	var ownershipId = AddOwnerships(legalEntityId, company_id)
+	var exchangeId = AddExchange("HOSE")
+	var stockId = AddStock("ACB", exchangeId)
+	var ownershipId = AddOwnerships(legalEntityId, stockId, 100)
 
 	if ownershipId == -1 {
 		t.Fail()
 	}
 
 	var personId = AddPerson("A", 19, "httplsdf")
-	var oId = AddPersonOwnerships(personId, company_id)
+	var oId = AddPersonOwnerships(personId, stockId, 100)
 	if oId == -1 {
 		t.Fail()
 	}
 
 	var companyB = AddCompany("ABCD")
-	var oId2 = AddCompanyOwnerships(company_id, companyB)
+	var oId2 = AddCompanyOwnerships(companyB, stockId, 100)
 	if oId2 == -1 {
 		t.Fail()
 	}

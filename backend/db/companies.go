@@ -23,7 +23,7 @@ func AddCompany(name string) int {
 	return companyId
 }
 
-func GetAllCompany() []Company {
+func GetAllCompanies() []Company {
 	var query = fmt.Sprintf(`SELECT id, legal_entity_id, name FROM %[1]s`, companyTable)
 	rows, err := pool.Query(context.TODO(), query)
 	if err != nil {
@@ -39,7 +39,7 @@ func GetAllCompany() []Company {
 }
 
 func AddFinancialStatementType(name string) int {
-	var insertScript string = `INSERT INTO financial_statement_types(name) VALUES($1) RETURN id;`
+	var insertScript string = `INSERT INTO financial_statement_types(name) VALUES($1) RETURNING id;`
 	var financialStatementTypeId int = -1
 	err := pool.QueryRow(context.TODO(), insertScript, name).Scan(&financialStatementTypeId)
 	if err != nil {

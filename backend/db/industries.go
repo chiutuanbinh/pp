@@ -21,7 +21,7 @@ func AddIndustry(name string, industryCategoryId int) int {
 	return industryId
 }
 
-func GetAllIndustry() []Industry {
+func GetAllIndustries() []Industry {
 	var query = fmt.Sprintf(`SELECT id, name FROM %[1]s`, industryTable)
 	rows, err := pool.Query(context.TODO(), query)
 	if err != nil {
