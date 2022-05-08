@@ -58,7 +58,8 @@ CREATE TABLE IF NOT EXISTS investments(
 
 CREATE TABLE IF NOT EXISTS industry_categories(
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT,
+    description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS industries(
@@ -166,7 +167,8 @@ CREATE TABLE IF NOT EXISTS financial_statement_line_sequences(
 
 CREATE TABLE IF NOT EXISTS exchanges(
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT,
+    code TEXT
 );
 
 CREATE TABLE IF NOT EXISTS stocks (
@@ -205,5 +207,10 @@ CREATE TABLE IF NOT EXISTS stock_prices (
     CONSTRAINT fk_stock
         FOREIGN KEY(stock_id)
             REFERENCES stocks(id)
+    CONSTRAINT stock_prices_un UNIQUE (date, stock_id)
 );
 
+CREATE INDEX idx_stock_code 
+ON stocks(code);
+CREATE INDEX idx_exchange_code 
+ON exchanges(code);

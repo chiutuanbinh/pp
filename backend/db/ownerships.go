@@ -19,7 +19,7 @@ func AddOwnerships(legalEntityId int, stockId int, amount int) int {
 	err := pool.QueryRow(context.TODO(), insertScript, legalEntityId, stockId, amount).Scan(&ownsId)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	return ownsId
@@ -30,7 +30,7 @@ func AddPersonOwnerships(personId int, stockId int, amount int) int {
 	var legal_entity_id = -1
 	err := pool.QueryRow(context.TODO(), queryScript, personId).Scan(&legal_entity_id)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	return AddOwnerships(legal_entity_id, stockId, amount)
 }
@@ -40,7 +40,7 @@ func AddCompanyOwnerships(owningCompanyId int, stockId int, amount int) int {
 	var legal_entity_id = -1
 	err := pool.QueryRow(context.TODO(), queryScript, owningCompanyId).Scan(&legal_entity_id)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	return AddOwnerships(legal_entity_id, stockId, amount)
 }

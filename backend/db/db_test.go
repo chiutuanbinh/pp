@@ -19,17 +19,25 @@ func TestConnect(t *testing.T) {
 func TestAddLegalEntity(t *testing.T) {
 	var id int = addLegalEntity()
 	t.Log(id)
-	if id == -1 {
+	if id == 0 {
 		t.Fail()
 	}
 }
 
 func TestAddCompany(t *testing.T) {
-	var companyId = AddCompany("ABC")
-	if companyId == -1 {
+	var companyId = AddCompany("ABC", -1)
+	if companyId == 0 {
 		t.Fail()
 	}
 	t.Log(companyId)
+}
+
+func TestAddExchange(t *testing.T) {
+	var exchangeId = AddExchange("Over the counter", "OTC")
+	if exchangeId == 0 {
+		t.Fail()
+	}
+	t.Log(exchangeId)
 }
 
 func TestGetAllCompany(t *testing.T) {
@@ -38,8 +46,8 @@ func TestGetAllCompany(t *testing.T) {
 }
 
 func TestAddPerson(t *testing.T) {
-	var personId = AddPerson("NGUYEN VAN A", 52, "http://sth.sthm")
-	if personId == -1 {
+	var personId = AddPerson("NGUYEN VAN A", 52, "http://sth.sthm", 0)
+	if personId == 0 {
 		t.Fail()
 	}
 	t.Log(personId)
@@ -47,23 +55,23 @@ func TestAddPerson(t *testing.T) {
 
 func TestAddOwnerships(t *testing.T) {
 	var legalEntityId = addLegalEntity()
-	var exchangeId = AddExchange("HOSE")
+	var exchangeId = AddExchange("", "HOSE")
 	var stockId = AddStock("ACB", exchangeId)
 	var ownershipId = AddOwnerships(legalEntityId, stockId, 100)
 
-	if ownershipId == -1 {
+	if ownershipId == 0 {
 		t.Fail()
 	}
 
-	var personId = AddPerson("A", 19, "httplsdf")
+	var personId = AddPerson("A", 19, "httplsdf", 0)
 	var oId = AddPersonOwnerships(personId, stockId, 100)
-	if oId == -1 {
+	if oId == 0 {
 		t.Fail()
 	}
 
-	var companyB = AddCompany("ABCD")
+	var companyB = AddCompany("ABCD", -1)
 	var oId2 = AddCompanyOwnerships(companyB, stockId, 100)
-	if oId2 == -1 {
+	if oId2 == 0 {
 		t.Fail()
 	}
 }
@@ -71,7 +79,16 @@ func TestAddOwnerships(t *testing.T) {
 func TestAddIndustryCategory(t *testing.T) {
 	var industryCategoryId = AddIndustryCategory("STEEL")
 	t.Log(industryCategoryId)
-	if industryCategoryId == -1 {
+	if industryCategoryId == 0 {
+		t.Fail()
+	}
+}
+
+func TestAddIndustry(t *testing.T) {
+	var industryCategoryId = AddIndustryCategory("PRODUCTION")
+	var industryId = AddIndustry("STEEL", industryCategoryId, "")
+	t.Log(industryId)
+	if industryId == 0 {
 		t.Fail()
 	}
 }

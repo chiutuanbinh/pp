@@ -6,6 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 
 // Generate Order Data
 function createData(
@@ -59,35 +60,63 @@ function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
-export default function Orders() {
-  return (
-    <React.Fragment>
-      <Title>Recent Orders</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+class Orders extends React.Component<any, any> {
+  render(): React.ReactNode {
+    return (
+      <React.Fragment>
+        <Title>Recent Orders</Title>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Ship To</TableCell>
+              <TableCell>Payment Method</TableCell>
+              <TableCell align="right">Sale Amount</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link>
-    </React.Fragment>
-  );
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.date}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.shipTo}</TableCell>
+                <TableCell>{row.paymentMethod}</TableCell>
+                <TableCell align="right">{`$${row.amount}`}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+          See more orders
+        </Link>
+      </React.Fragment>
+    );
+  }
 }
+
+class OrdersX extends React.Component<any, any> {
+
+  constructor(props: any) {
+    super(props)
+  }
+  render(): React.ReactNode {
+    const rs: GridRowsProp = rows.map((r, index) => ({
+      id: index, col1: r.date, col2: r.name, col3: r.shipTo, col4: r.paymentMethod, col5: r.amount
+    }))
+    console.log(rs)
+    const cols: GridColDef[] = [
+      { field: 'col1', headerName: 'column 1', width: 150 ,headerClassName: 'super-app-theme--header',
+      headerAlign: 'center',},
+      { field: 'col2', headerName: 'column 2', width: 150 },
+      { field: 'col3', headerName: 'column 3', width: 150 },
+      { field: 'col4', headerName: 'column 4', width: 150 },
+      { field: 'col5', headerName: 'column 5', width: 150 },
+    ]
+    return (<>
+      <DataGrid rows={rs} columns={cols}></DataGrid>
+    </>)
+  }
+}
+
+export default OrdersX 

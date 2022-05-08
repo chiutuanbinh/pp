@@ -10,7 +10,7 @@ func addLegalEntity() int {
 	var legalEntityId int = -1
 	err := pool.QueryRow(context.TODO(), insertScript).Scan(&legalEntityId)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	return legalEntityId
 }

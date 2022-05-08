@@ -1,0 +1,1 @@
+sudo apt install  libatk-bridge2.0-0 libcups2 libxkbcommon0 libxdamage1 libgbm libpango-1.0-0 libcairo2
